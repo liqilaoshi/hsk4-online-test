@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>HSK（四级）阅读部分在线模拟练习 (H41327)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        .timer-bar {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 25px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .start-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            font-size: 0.9em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .start-btn:hover {
+            background-color: #219653;
+        }
+        .section-title {
+            background: #eef2f3;
+            padding: 10px 15px;
+            border-left: 5px solid #3498db;
+            font-size: 1.2em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: #2980b9;
+        }
+        .question-box {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .sub-sentences {
+            background: #fff;
+            padding: 10px 15px;
+            border: 1px dashed #ccc;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+        }
+        .sub-sentences p {
+            margin: 5px 0;
+        }
+        .options-group label {
+            display: inline-block;
+            margin-right: 15px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+        }
+        .options-group label:hover {
+            background: #f0f0f0;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+        .correct-ans {
+            color: #27ae60;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+        .wrong-ans {
+            color: #c0392b;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+        .feedback {
+            margin-top: 5px;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>H41327 阅读部分模拟练习</h1>
+    <div class="subtitle">线上实时自动批改测试（第46-85题）</div>
+
+    <div id="timerBar" class="timer-bar">
+        <div>⏱️ 阅读考试时间：<span id="timer">40:00</span></div>
+        <button type="button" id="startBtn" class="start-btn" onclick="startTimer()">开始考试</button>
+    </div>
+
+    <form id="quizForm">
+
+        <!-- ==================== 第一部分 (46-55题) ==================== -->
+        <div class="section-title">第一部分：选词填空（第46-55题）</div>
+
+        <div style="background: #e8f8f5; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 0.9em;">
+            <strong>【46-50题 备选词汇】</strong> A. 拉 B. 圆 C. 完全 D. 坚持 E. 重点 F. 饺子[cite: 30]
+        </div>
+        <script>
+            const p1_part1 = [
+                { id: 46, text: "46. 今天晚上的月亮又大又( ____ )，真漂亮，咱们出去走走吧。", ans: "B", opts: ["A. 拉", "B. 圆", "C. 完全", "D. 坚持", "E. 重点", "F. 饺子"] },
+                { id: 47, text: "47. 我最喜欢过年，全家人在一起包( ____ )，热闹极了。", ans: "F", opts: ["A. 拉", "B. 圆", "C. 完全", "D. 坚持", "E. 重点", "F. 饺子"] },
+                { id: 48, text: "48. 他( ____ )有能力做好这件事，但他没有认真去做。", ans: "C", opts: ["A. 拉", "B. 圆", "C. 完全", "D. 坚持", "E. 重点", "F. 饺子"] },
+                { id: 49, text: "49. 那棵树特别粗，要四五个大人手( ____ )手才能抱住。", ans: "A", opts: ["A. 拉", "B. 圆", "C. 完全", "D. 坚持", "E. 重点", "F. 饺子"] },
+                { id: 50, text: "50. 讲话应先讲( ____ )，这样才能使别人更快地了解你想表达的意思。", ans: "E", opts: ["A. 拉", "B. 圆", "C. 完全", "D. 坚持", "E. 重点", "F. 饺子"] }
+            ];
+            p1_part1.forEach(q => {
+                let html = `<div class="question-box" data-qid="${q.id}" data-answer="${q.ans}"><div class="question-text">${q.text}</div><div class="options-group">`;
+                q.opts.forEach(o => { let val = o.charAt(0); html += `<label><input type="radio" name="q${q.id}" value="${val}"> ${o}</label>`; });
+                html += `</div><div class="feedback"></div></div>`;
+                document.write(html);
+            });
+        </script>
+
+        <div style="background: #e8f8f5; padding: 10px; border-radius: 5px; margin: 25px 0 15px 0; font-size: 0.9em;">
+            <strong>【51-55题 备选词汇】</strong> A. 样子 B. 超过 C. 温度 D. 入口 E. 严重 F. 整理[cite: 31]
+        </div>
+        <script>
+            const p1_part2 = [
+                { id: 51, text: "51. A: 飞机还有40分钟就要起飞了，你怎么还没到？<br>B: 路上堵车。我现在在( ____ )处，马上就到。", ans: "D", opts: ["A. 样子", "B. 超过", "C. 温度", "D. 入口", "E. 严重", "F. 整理"] },
+                { id: 52, text: "52. A: 能把照片发到我邮箱里吗？<br>B: 没问题，把你的邮箱地址告诉我，我( ____ )好了就发给你。", ans: "F", opts: ["A. 样子", "B. 超过", "C. 温度", "D. 入口", "E. 严重", "F. 整理"] },
+                { id: 53, text: "53. A: 你好，请问我女儿可以买儿童票吗？<br>B: 可以，身高没( ____ )一米二就可以买。", ans: "B", opts: ["A. 样子", "B. 超过", "C. 温度", "D. 入口", "E. 严重", "F. 整理"] },
+                { id: 54, text: "54. A: 看( ____ )你对这里很熟悉。<br>B: 当然了，我在这儿生活了大约10年，去年才搬走的。", ans: "A", opts: ["A. 样子", "B. 超过", "C. 温度", "D. 入口", "E. 严重", "F. 整理"] },
+                { id: 55, text: "55. A: 只是腿擦破了点儿皮，大夫说不( ____ )。<br>B: 没事就好，你先躺下休息一会儿吧。", ans: "E", opts: ["A. 样子", "B. 超过", "C. 温度", "D. 入口", "E. 严重", "F. 整理"] }
+            ];
+            p1_part2.forEach(q => {
+                let html = `<div class="question-box" data-qid="${q.id}" data-answer="${q.ans}"><div class="question-text">${q.text}</div><div class="options-group">`;
+                q.opts.forEach(o => { let val = o.charAt(0); html += `<label><input type="radio" name="q${q.id}" value="${val}"> ${o}</label>`; });
+                html += `</div><div class="feedback"></div></div>`;
+                document.write(html);
+            });
+        </script>
+
+
+        <!-- ==================== 第二部分 (56-65题) ==================== -->
+        <div class="section-title">第二部分：排列顺序（第56-65题）</div>
+        <script>
+            const p2Data = {
+                56: { sentences: ["A. 至少我们努力过", "B. 即使失败了也没关系", "C. 机会来了,就该主动去试一试"], ans: "CBA" },
+                57: { sentences: ["A. 但世界上还有很多是钱买不到、也换不来的", "B. 钱虽然能买到很多东西", "C. 例如生命、爱情、友谊和时间"], ans: "BAC" },
+                58: { sentences: ["A. 北方秋天很干燥,你刚来", "B. 觉得不适应很正常", "C. 每天多喝水,习惯了就不会那么难受了"], ans: "ABC" },
+                59: { sentences: ["A. 实际上,很多问题的答案都可以从生活中找到", "B. 课本上的知识并不能解决我们遇到的所有问题", "C. 但这需要我们用眼睛去发现,用心去总结"], ans: "BAC" },
+                60: { sentences: ["A. 还能扩大知识面", "B. 我提高汉语水平的方法就是坚持看中文报纸", "C. 这样不但能学到很多新的词语"], ans: "BCA" },
+                61: { sentences: ["A. 这些家具很多都是他帮忙抬上来的", "B. 力气却大得很", "C. 别看小黄个子不高,人也瘦"], ans: "CBA" },
+                62: { sentences: ["A. 飞往该市的好几趟航班", "B. 昨晚19时南京市突然下起了大雨", "C. 都不得不推迟起飞"], ans: "BAC" },
+                63: { sentences: ["A. 我家离北京很近", "B. 所以周末和节假日我一般都会回家", "C. 只有100多公里,开车的话大约一个小时就到了"], ans: "ACB" },
+                64: { sentences: ["A. 懂得互相信任和尊重才是最重要的", "B. 两个人既然决定共同生活", "C. 那么,只有浪漫和新鲜感是不够的"], ans: "BCA" },
+                65: { sentences: ["A. 一看见医生就哭,他怎么都没想到", "B. 我长大后竟然会成为一名护士", "C. 爸爸说我小时候特别害怕打针"], ans: "CAB" }
+            };
+
+            for (let i = 56; i <= 65; i++) {
+                let sHtml = "";
+                p2Data[i].sentences.forEach(s => { sHtml += `<p><strong>${s.charAt(0)}.</strong> ${s.slice(2)}</p>`; });
+                document.write(`
+                    <div class="question-box" data-qid="${i}" data-answer="${p2Data[i].ans}">
+                        <div class="question-text">${i}. 请将下列句子排列成通顺的顺序：</div>
+                        <div class="sub-sentences">${sHtml}</div>
+                        <div class="options-group">
+                            <label><input type="radio" name="q${i}" value="ABC"> ABC</label>
+                            <label><input type="radio" name="q${i}" value="ACB"> ACB</label>
+                            <label><input type="radio" name="q${i}" value="BAC"> BAC</label>
+                            <label><input type="radio" name="q${i}" value="BCA"> BCA</label>
+                            <label><input type="radio" name="q${i}" value="CAB"> CAB</label>
+                            <label><input type="radio" name="q${i}" value="CBA"> CBA</label>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                `);
+            }
+        </script>
+
+
+        <!-- ==================== 第三部分 (66-85题) ==================== -->
+        <div class="section-title">第三部分：阅读理解（第66-85题）</div>
+        <script>
+            const p3Data = {
+                66: { text: "每个人都有缺点,再优秀的人也一样。我们总是很容易看到一个人的缺点,但是别忘了,他身上的优点更值得我们去发现、去学习。<br><strong>★ 这段话提醒我们要：</strong>", ans: "D", opts: ["A. 有耐心", "B. 接受批评", "C. 学会原谅", "D. 看到别人的优点"] },
+                67: { text: "森林有改变小范围气候的作用。在高温的夏季,森林内的温度会比周围低3到5℃;而在寒冷多风的冬季,森林能起到降低风速、提高气温的作用。<br><strong>★ 夏季,森林可以：</strong>", ans: "A", opts: ["A. 降低气温", "B. 改变风向", "C. 增加雨量", "D. 使皮肤湿润"] },
+                68: { text: "选择职业时,我们首先应该对自己有清楚的认识,不仅要知道自己想做什么,还要根据自己的性格、爱好去判断什么样的工作适合自己,这样才能找到满意的工作。<br><strong>★ 选择职业时,应该：</strong>", ans: "D", opts: ["A. 多调查", "B. 打好基础", "C. 及时总结", "D. 先认清自己"] },
+                69: { text: "有些人通过节食的方法来减肥,虽然有效,但是时间长了身体会受不了。真正健康的减肥方法应该是多锻炼,这样做既对身体好,还能让自己看起来更有精神。<br><strong>★ 想要健康减肥,应该：</strong>", ans: "A", opts: ["A. 多运动", "B. 少吃米饭", "C. 经常站着", "D. 多玩儿电子游戏"] },
+                70: { text: "张先生,这儿离你们公司也就两三站的距离,周围环境不错,对面有超市和银行,房租也不贵,您要不要再考虑一下？<br><strong>★ 张先生：</strong>", ans: "C", opts: ["A. 被骗了", "B. 住在附近", "C. 在找房子", "D. 在看广告"] },
+                71: { text: "大城市和小城市各有各的好处。大城市的工作机会确实多一些,但竞争的压力大;相反,在小城市生活就会轻松许多。<br><strong>★ 他觉得小城市：</strong>", ans: "D", opts: ["A. 更安静", "B. 收入高", "C. 招聘会多", "D. 生活压力小"] },
+                72: { text: "如果一个人必须要完成一件自己不喜欢的事情,最好的办法就是早点儿把它做完,这样才能提前结束烦恼。<br><strong>★ 对不喜欢却又必须做的事,最好：</strong>", ans: "C", opts: ["A. 找人帮忙", "B. 交给别人", "C. 早点儿完成", "D. 留到最后做"] },
+                73: { text: "老教授对新生说:“从今天起,如果你每天用100字把自己的生活写下来,毕业时你将会得到一本10多万字的书,内容就是你4年大学生活的美好回忆。”<br><strong>★ 老教授希望学生：</strong>", ans: "D", opts: ["A. 诚实", "B. 别太得意", "C. 经常复习", "D. 记下自己的生活"] },
+                74: { text: "语言是人们交流的工具,音乐也是一种语言,人们可以用它来表达自己的感情,而且和其他语言比起来,音乐表达的感情有时更容易让人听懂。<br><strong>★ 根据这段话,音乐表达的感情：</strong>", ans: "C", opts: ["A. 复杂多变", "B. 让人难过", "C. 更容易理解", "D. 让人印象更深"] },
+                75: { text: "很多时候,人们习惯根据过去的经验做事,但有时候也不能完全相信经验,而应该根据不同的情况选择不同的方法,这样才不容易出错。<br><strong>★ 根据这段话,过去的经验：</strong>", ans: "D", opts: ["A. 更准确", "B. 值得重视", "C. 无法被证明", "D. 不一定适合现在"] },
+                76: { text: "马校长介绍说,学校举办这次文化节活动,一方面是想让各国学生更好地了解中国,另一方面是想为学生们提供互相交流和学习的机会。<br><strong>★ 学校举办这次活动,是想帮助学生们：</strong>", ans: "D", opts: ["A. 认识汉字", "B. 熟悉校园", "C. 提高信心", "D. 相互增加了解"] },
+                77: { text: "他平时就对自己要求很严格,尤其是赛前那个星期,他每天都会把全部动作练习好几遍,希望在比赛中做到最好。<br><strong>★ 比赛前,他：</strong>", ans: "A", opts: ["A. 更努力", "B. 十分兴奋", "C. 非常着急", "D. 停止了练习"] },
+                78: { text: "拒绝握手是不礼貌的,不过当手不干净时,可以先拒绝,然后马上解释原因并对此表示抱歉,否则可能引起误会,让人以为你不友好。<br><strong>★ 拒绝握手后为什么要马上道歉？</strong>", ans: "A", opts: ["A. 减少误会", "B. 怕人怀疑", "C. 想引人同情", "D. 想获得表扬"] },
+                79: { text: "叶诗文是中国著名的游泳运动员,她6岁时就比同龄人高不少,老师看她手脚也大,身体其他条件也很符合游泳运动员的要求,就鼓励她专门去学游泳。尽管她现在只有16岁,但已经获得了好几个国际大奖。<br><strong>★ 老师鼓励叶诗文学游泳,是因为觉得她：</strong>", ans: "D", opts: ["A. 聪明", "B. 跑得快", "C. 获过奖", "D. 身体条件好"] },
+                80: { text: "目的地也许只有一个,但是通往目的地的道路却有很多条。所以,当一条路走不通时,我们可以换另外一条试试。只要我们不放弃努力,总会找到一条合适的路,通往成功的目的地。<br><strong>★ 当一条路走不通时,我们应该：</strong>", ans: "B", opts: ["A. 看地图", "B. 试试别的路", "C. 向当地人问路", "D. 给朋友打电话"] },
+                81: { text: "（续上题）<strong>★ 这段话主要想告诉我们：</strong>", ans: "C", opts: ["A. 要有理想", "B. 工作要积极", "C. 成功需要坚持", "D. 做事要有计划"] },
+                82: { text: "顾客朋友们,本店现推出“购书送好礼”活动,购书满100元即可获得日记本一个,满200元可获得字典一部。另外,部分图书还有打折活动,其中,小说7.5折,杂志8折,研究生入学考试用书等6折。欢迎选购!祝您购物愉快!<br><strong>★ 购书满100元能获得什么礼物？</strong>", ans: "B", opts: ["A. 词典", "B. 日记本", "C. 故事书", "D. 汉语书"] },
+                83: { text: "（续上题）<strong>★ 根据这段话,可以知道：</strong>", ans: "C", opts: ["A. 小说半价", "B. 放寒假了", "C. 有些书打折", "D. 书店生意很好"] },
+                84: { text: "保护地球环境,并不是离我们很远、很难做到的事情。实际上,我们只需注意一下身边的小事就可以。例如,出门时记得关空调和电脑,节约用电;少开车,多骑车或者坐公共汽车,降低空气污染;买菜时自备购物袋,少用塑料袋,减少白色污染 这些虽然都是小事,却有实实在在的效果。<br><strong>★ 为了减少白色污染,我们应该：</strong>", ans: "C", opts: ["A. 少说多做", "B. 节约用水", "C. 少用塑料袋", "D. 少用一次性筷子"] },
+                85: { text: "（续上题）<strong>★ 这段话主要谈什么？</strong>", ans: "B", opts: ["A. 社会责任", "B. 环境保护", "C. 节约与浪费", "D. 经济的发展"] }
+            };
+
+            for (let i = 66; i <= 85; i++) {
+                let html = `<div class="question-box" data-qid="${i}" data-answer="${p3Data[i].ans}">
+                    <div class="question-text">${i}. ${p3Data[i].text}</div>
+                    <div class="options-group" style="display:block;">`;
+                p3Data[i].opts.forEach(o => {
+                    let val = o.charAt(0);
+                    html += `<label style="display:block; margin:5px 0;"><input type="radio" name="q${i}" value="${val}"> ${o}</label>`;
+                });
+                html += `</div><div class="feedback"></div></div>`;
+                document.write(html);
+            }
+        </script>
+
+        <div class="btn-container">
+            <button type="button" class="submit-btn" onclick="checkAnswers()">提交并查看批改结果</button>
+        </div>
+    </form>
+
+    <div id="resultBox" class="result-box"></div>
+</div>
+
+<script>
+let timerInterval = null;
+let timeLeft = 40 * 60; // 40分钟
+let isStarted = false;
+
+function startTimer() {
+    if (isStarted) return;
+    isStarted = true;
+    
+    const startBtn = document.getElementById('startBtn');
+    startBtn.textContent = "考试进行中";
+    startBtn.style.backgroundColor = "#e67e22";
+    startBtn.disabled = true;
+
+    const timerElement = document.getElementById('timer');
+    
+    timerInterval = setInterval(() => {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        
+        timerElement.textContent = minutes + ':' + seconds;
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert('时间到！系统将为您自动提交阅读试卷。');
+            checkAnswers();
+        }
+        timeLeft--;
+    }, 1000);
+}
+
+function checkAnswers() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    
+    const questionBoxes = document.querySelectorAll('.question-box');
+    let score = 0;
+    let total = questionBoxes.length;
+
+    questionBoxes.forEach(box => {
+        const qid = box.getAttribute('data-qid');
+        const correctAnswer = box.getAttribute('data-answer');
+        const selectedInput = box.querySelector(`input[name="q${qid}"]:checked`);
+        const feedbackDiv = box.querySelector('.feedback');
+
+        box.style.borderColor = "#e0e0e0";
+        feedbackDiv.innerHTML = "";
+
+        if (!selectedInput) {
+            box.style.borderColor = "#f39c12";
+            feedbackDiv.innerHTML = `<div class="wrong-ans">未作答！正确答案是：${correctAnswer}</div>`;
+        } else {
+            const userAnswer = selectedInput.value;
+            if (userAnswer === correctAnswer) {
+                score++;
+                box.style.borderColor = "#27ae60";
+                box.style.backgroundColor = "#f4fbf7";
+                feedbackDiv.innerHTML = `<div class="correct-ans">回答正确！✓</div>`;
+            } else {
+                box.style.borderColor = "#c0392b";
+                box.style.backgroundColor = "#fdf5f5";
+                feedbackDiv.innerHTML = `<div class="wrong-ans">回答错误。你的选择 ${userAnswer}，正确答案是：<strong>${correctAnswer}</strong></div>`;
+            }
+        }
+    });
+
+    const resultBox = document.getElementById('resultBox');
+    resultBox.style.display = "block";
+    resultBox.style.backgroundColor = score === total ? "#d4edda" : "#e2e3e5";
+    resultBox.style.color = score === total ? "#155724" : "#383d41";
+    resultBox.innerHTML = `测试完成！您的阅读总得分是：${score} / ${total} 题`;
+    
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
