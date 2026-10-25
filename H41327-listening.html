@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>HSK（四级）听力部分在线模拟练习 (H41327)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        /* 考试控制面板 */
+        .exam-control-bar {
+            background: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .control-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .start-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            font-size: 0.9em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .start-btn:hover {
+            background-color: #219653;
+        }
+        .audio-status-box {
+            background: #34495e;
+            padding: 10px 15px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .audio-status-text {
+            font-size: 0.95em;
+            color: #ecf0f1;
+        }
+        /* 考场模式：锁死进度条与按钮交互 */
+        .locked-audio {
+            width: 120px;
+            height: 25px;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        .section-title {
+            background: #eef2f3;
+            padding: 10px 15px;
+            border-left: 5px solid #3498db;
+            font-size: 1.2em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: #2980b9;
+        }
+        .question-box {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .options-group label {
+            display: inline-block;
+            margin-right: 15px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+        }
+        .options-group label:hover {
+            background: #f0f0f0;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+        .correct-ans {
+            color: #27ae60;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+        .wrong-ans {
+            color: #c0392b;
+            font-size: 0.9em;
+            margin-top: 8px;
+        }
+        .feedback {
+            margin-top: 5px;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>H41327 听力考试模拟练习</h1>
+    <div class="subtitle">严格考场模式（音频自动播放，不可暂停、不可拖动进度条）</div>
+
+    <!-- 顶部置顶控制面板 -->
+    <div class="exam-control-bar">
+        <div class="control-top">
+            <div>⏱️ 考试时间：<span id="timer">30:00</span></div>
+            <button type="button" id="startBtn" class="start-btn" onclick="startExam()">开始考试</button>
+        </div>
+        <div class="audio-status-box">
+            <div class="audio-status-text" id="audioStatusTip">🎧 状态：等待点击“开始考试”</div>
+            <audio id="examAudio" class="locked-audio" controls preload="auto">
+                <source src="https://files.catbox.moe/nflwk1.mp3" type="audio/mp3">
+            </audio>
+        </div>
+    </div>
+
+    <form id="quizForm">
+
+        <!-- ==================== 第一部分 (1-10题) ==================== -->
+        <div class="section-title">第一部分：判断对错（第1-10题）[cite: 43]</div>
+        <script>
+            const part1Texts = {
+                1: "★ 他暑假想去云南旅游。",
+                2: "★ 女儿晚上要加班。",
+                3: "★ 他习惯了这里的生活。",
+                4: "★ 他们在谈价格。",
+                5: "★ 中国人喜欢数字“6”。",
+                6: "★ 他几乎每天都去打篮球。",
+                7: "★ 今天报名还来得及。",
+                8: "★ 小林是律师。",
+                9: "★ 不要总是羡慕别人。",
+                10: "★ 明天中午有大雪。"
+            };
+            const part1Answers = {1:'√', 2:'X', 3:'√', 4:'X', 5:'√', 6:'X', 7:'√', 8:'X', 9:'√', 10:'X'};
+
+            for (let i = 1; i <= 10; i++) {
+                document.write(`
+                    <div class="question-box" data-qid="${i}" data-answer="${part1Answers[i]}">
+                        <div class="question-text">${i}. ${part1Texts[i]}</div>
+                        <div class="options-group">
+                            <label><input type="radio" name="q${i}" value="√"> √ 正确</label>
+                            <label><input type="radio" name="q${i}" value="X"> X 错误</label>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                `);
+            }
+        </script>
+
+        <!-- ==================== 第二部分 (11-25题) ==================== -->
+        <div class="section-title">第二部分：单项选择（第11-25题）[cite: 44, 45]</div>
+        <script>
+            const part2Answers = {
+                11:'B', 12:'C', 13:'D', 14:'A', 15:'B', 16:'B', 17:'A', 18:'D', 19:'D', 20:'A',
+                21:'C', 22:'B', 23:'D', 24:'B', 25:'A'
+            };
+            const part2Opts = {
+                11: ['A. 同事', 'B. 叔叔', 'C. 奶奶', 'D. 观众'],
+                12: ['A. 下雨了', 'B. 刚洗完澡', 'C. 开空调了', 'D. 开着窗户'],
+                13: ['A. 步行', 'B. 骑车', 'C. 坐地铁', 'D. 坐出租车'],
+                14: ['A. 打网球', 'B. 擦桌子', 'C. 洗衣服', 'D. 找袜子'],
+                15: ['A. 太随便', 'B. 写得不错', 'C. 没原来的好', 'D. 与实际不符'],
+                16: ['A. 暂时别卖', 'B. 上网看看', 'C. 先借一个用', 'D. 找朋友商量'],
+                17: ['A. 填表', 'B. 寄东西', 'C. 买铅笔', 'D. 打印菜单'],
+                18: ['A. 想请假', 'B. 在办护照', 'C. 下周出差', 'D. 拿到签证了'],
+                19: ['A. 是教授', 'B. 成绩不好', 'C. 在开玩笑', 'D. 考上了博士'],
+                20: ['A. 开会', 'B. 买手机', 'C. 发传真', 'D. 写邀请信'],
+                21: ['A. 很无聊', 'B. 很奇怪', 'C. 十分精彩', 'D. 让人失望'],
+                22: ['A. 请客', 'B. 扔垃圾', 'C. 抬沙发', 'D. 收拾行李'],
+                23: ['A. 很成熟', 'B. 很勇敢', 'C. 遇事冷静', 'D. 可以做翻译'],
+                24: ['A. 公园', 'B. 大使馆', 'C. 首都体育馆', 'D. 国家图书馆'],
+                25: ['A. 牙疼', 'B. 困了', 'C. 胖了', 'D. 肚子不舒服']
+            };
+
+            for (let i = 11; i <= 25; i++) {
+                let html = `<div class="question-box" data-qid="${i}" data-answer="${part2Answers[i]}">
+                    <div class="question-text">${i}.</div>
+                    <div class="options-group" style="display:block;">`;
+                part2Opts[i].forEach(opt => {
+                    let val = opt.charAt(0);
+                    html += `<label style="display:block; margin:5px 0;"><input type="radio" name="q${i}" value="${val}"> ${opt}</label>`;
+                });
+                html += `</div><div class="feedback"></div></div>`;
+                document.write(html);
+            }
+        </script>
+
+        <!-- ==================== 第三部分 (26-45题) ==================== -->
+        <div class="section-title">第三部分：单项选择（第26-45题）[cite: 46, 47]</div>
+        <script>
+            const part3Answers = {
+                26:'A', 27:'B', 28:'C', 29:'A', 30:'C', 31:'C', 32:'D', 33:'C', 34:'B', 35:'B',
+                36:'A', 37:'C', 38:'A', 39:'C', 40:'B', 41:'D', 42:'D', 43:'A', 44:'B', 45:'D'
+            };
+            const part3Opts = {
+                26: ['A. 灯不亮了', 'B. 冰箱坏了', 'C. 女的迟到了', 'D. 房间很暖和'],
+                27: ['A. 很吵', 'B. 菜好吃', 'C. 啤酒便宜', 'D. 服务员很少'],
+                28: ['A. 爱跳舞', 'B. 爱听广播', 'C. 会唱京剧', 'D. 是数学老师'],
+                29: ['A. 要去面试', 'B. 要演节目', 'C. 要看表演', 'D. 要参加讨论会'],
+                30: ['A. 不自然', 'B. 简单易懂', 'C. 让人感动', 'D. 不吸引人'],
+                31: ['A. 教室', 'B. 电梯里', 'C. 理发店', 'D. 办公室'],
+                32: ['A. 盐', 'B. 镜子', 'C. 牙膏', 'D. 西红柿'],
+                33: ['A. 饿了', 'B. 没睡醒', 'C. 钱包丢了', 'D. 弄脏裙子了'],
+                34: ['A. 放宽标准', 'B. 多积累经验', 'C. 输赢不重要', 'D. 按照规定办'],
+                35: ['A. 宾馆右边', 'B. 学校西门', 'C. 蛋糕店旁边', 'D. 植物园后面'],
+                36: ['A. 司机', 'B. 导游', 'C. 警察', 'D. 售货员'],
+                37: ['A. 很旧', 'B. 速度快', 'C. 能到动物园', 'D. 从火车站始发'],
+                38: ['A. 药', 'B. 草', 'C. 食品', 'D. 饮料'],
+                39: ['A. 是酸的', 'B. 怕阳光', 'C. 历史很长', 'D. 红茶最流行'],
+                40: ['A. 照相机', 'B. 洗衣机', 'C. 复印机', 'D. 洗碗机'],
+                41: ['A. 箱子上', 'B. 说明书上', 'C. 合格证上', 'D. 保修卡上'],
+                42: ['A. 不能吃鱼', 'B. 不能喝果汁', 'C. 饭后要散步', 'D. 不能吃辣的'],
+                43: ['A. 别吃早饭', 'B. 多吃水果', 'C. 要有好心情', 'D. 不能戴手表'],
+                44: ['A. 发脾气', 'B. 替孩子做', 'C. 说孩子懒', 'D. 故意咳嗽'],
+                45: ['A. 仔细', 'B. 多阅读', 'C. 主动预习', 'D. 会安排时间']
+            };
+
+            for (let i = 26; i <= 45; i++) {
+                let html = `<div class="question-box" data-qid="${i}" data-answer="${part3Answers[i]}">
+                    <div class="question-text">${i}.</div>
+                    <div class="options-group" style="display:block;">`;
+                part3Opts[i].forEach(opt => {
+                    let val = opt.charAt(0);
+                    html += `<label style="display:block; margin:5px 0;"><input type="radio" name="q${i}" value="${val}"> ${opt}</label>`;
+                });
+                html += `</div><div class="feedback"></div></div>`;
+                document.write(html);
+            }
+        </script>
+
+        <div class="btn-container">
+            <button type="button" class="submit-btn" onclick="checkAnswers()">提交并查看批改结果</button>
+        </div>
+    </form>
+
+    <div id="resultBox" class="result-box"></div>
+</div>
+
+<script>
+let timerInterval = null;
+let timeLeft = 30 * 60; // 30分钟
+let isStarted = false;
+const audioElem = document.getElementById('examAudio');
+
+audioElem.addEventListener('ended', function() {
+    document.getElementById('audioStatusTip').textContent = "🔒 听力音频已播放完毕";
+    audioElem.style.display = "none";
+});
+
+function startExam() {
+    if (isStarted) return;
+    isStarted = true;
+    
+    const startBtn = document.getElementById('startBtn');
+    startBtn.textContent = "考试进行中";
+    startBtn.style.backgroundColor = "#e67e22";
+    startBtn.disabled = true;
+
+    document.getElementById('audioStatusTip').textContent = "🔊 听力正在播放中（不可暂停、不可拖拽）";
+
+    audioElem.play().catch(error => {
+        console.log("自动播放被浏览器拦截。");
+    });
+
+    const timerElement = document.getElementById('timer');
+    timerInterval = setInterval(() => {
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        
+        timerElement.textContent = minutes + ':' + seconds;
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert('时间到！系统将为您自动提交听力试卷。');
+            checkAnswers();
+        }
+        timeLeft--;
+    }, 1000);
+}
+
+function checkAnswers() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    
+    audioElem.pause();
+    
+    const questionBoxes = document.querySelectorAll('.question-box');
+    let score = 0;
+    let total = questionBoxes.length;
+
+    questionBoxes.forEach(box => {
+        const qid = box.getAttribute('data-qid');
+        const correctAnswer = box.getAttribute('data-answer');
+        const selectedInput = box.querySelector(`input[name="q${qid}"]:checked`);
+        const feedbackDiv = box.querySelector('.feedback');
+
+        box.style.borderColor = "#e0e0e0";
+        feedbackDiv.innerHTML = "";
+
+        if (!selectedInput) {
+            box.style.borderColor = "#f39c12";
+            feedbackDiv.innerHTML = `<div class="wrong-ans">未作答！正确答案是：${correctAnswer}</div>`;
+        } else {
+            const userAnswer = selectedInput.value;
+            if (userAnswer === correctAnswer) {
+                score++;
+                box.style.borderColor = "#27ae60";
+                box.style.backgroundColor = "#f4fbf7";
+                feedbackDiv.innerHTML = `<div class="correct-ans">回答正确！✓</div>`;
+            } else {
+                box.style.borderColor = "#c0392b";
+                box.style.backgroundColor = "#fdf5f5";
+                feedbackDiv.innerHTML = `<div class="wrong-ans">回答错误。你的选择是 ${userAnswer}，正确答案是：<strong>${correctAnswer}</strong></div>`;
+            }
+        }
+    });
+
+    const resultBox = document.getElementById('resultBox');
+    resultBox.style.display = "block";
+    resultBox.style.backgroundColor = score === total ? "#d4edda" : "#e2e3e5";
+    resultBox.style.color = score === total ? "#155724" : "#383d41";
+    resultBox.innerHTML = `测试完成！您的听力总得分是：${score} / ${total} 题`;
+    
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
